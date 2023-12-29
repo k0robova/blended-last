@@ -2,19 +2,32 @@ import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 import { BiMailSend } from 'react-icons/bi';
 import styles from './Form.module.css';
+import { useAddCommentsMutation } from '../../redux/commentApi';
+import { Spinner } from '../Spinner/Spinner';
 
 export const Form = () => {
   const [author, setAuthor] = useState('');
   const [content, setContent] = useState('');
+  const [addComment, { isLoading }] = useAddCommentsMutation();
 
   const onHandleChange = (e) => {
     const { name, value } = e.target;
     console.log(name, value);
+    switch (name) {
+      case "author": setAuthor(value);
+
+        break;
+      case "text": setContent(value);
+        break;
+      default:
+        break;
+    }
   };
 
   const onHandleSubmit = (e) => {
     e.preventDefault();
 
+    addComment({ author, content });
     setAuthor('');
     setContent('');
   };
@@ -26,7 +39,7 @@ export const Form = () => {
           <span className={styles.labelName}>Full name</span>
           <input
             type='text'
-            name='name'
+            name='author'
             className={styles.input}
             value={author}
             onChange={onHandleChange}
@@ -45,8 +58,9 @@ export const Form = () => {
         </label>
 
         <button className={styles.formBtn}>
-          <BiMailSend className={styles.icon} />
-          Send
+          {isLoading ? <Spinner /> : <> <BiMailSend className={styles.icon} />
+            Send</>}
+
         </button>
       </form>
     </div>

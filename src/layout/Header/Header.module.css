@@ -11,7 +11,7 @@
 }
 
 .navbar {
-  @apply lg:text-lg;
+  @apply text-lg;
 }
 
 .navList {

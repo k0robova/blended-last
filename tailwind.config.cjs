@@ -2,7 +2,6 @@
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    screens: { md: "1200px" },
     extend: {
       container: {
         center: true,
